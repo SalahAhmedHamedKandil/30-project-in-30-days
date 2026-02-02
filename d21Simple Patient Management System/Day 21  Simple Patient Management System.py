@@ -25,8 +25,6 @@ def add_patient():
   diagnosis=input("patient's diagnosis : ").strip()
   while not diagnosis:
     diagnosis=input("patient's diagnosis : ").strip()
-
-
   with open("patients.txt","a",encoding="utf-8")as file:
     file.write(f"{name}|{age}|{diagnosis}\n")
   with open("patients.txt","r",encoding="utf-8")as file:
@@ -34,6 +32,7 @@ def add_patient():
     sort_list.sort()
   with open("patients.txt","w",encoding="utf-8")as file:
     file.writelines(sort_list)
+  print("information have been added")
 # -----------------------------------------------
 # 2- read informatiom from txt and show it 
 def show_patients():
@@ -46,7 +45,7 @@ def show_patients():
       print("~"*40)
       for index,line in enumerate(lines,start=1):
         name,age,diagnosis=line.strip().split("|")
-        print(f"{index} - name : {name}, age : {age} , diagnosis : {diagnosis}")
+        print(f"{index} - name : {name} | age : {age} | diagnosis : {diagnosis}")
   except FileNotFoundError:
     print("no file data found")
 # ---------------------------------
@@ -57,6 +56,8 @@ def delete_patient():
     patient_list=file.readlines()
     
   while True:
+    if len(patient_list)==0:
+      break
     print('~'*40)
     delete_number=input("enter patient's number to delete or enter 'cancel' to back : ").strip()
     if delete_number == "cancel" :
@@ -70,21 +71,11 @@ def delete_patient():
     if delete_number > len(patient_list) or delete_number<1 :
       print(f"please try again enter from 1 to {len(patient_list)}")
       continue
-
-        
     patient_list.pop(delete_number-1)
     with open ("patients.txt","w",encoding="utf-8") as file:
       file.writelines(patient_list)
-      break
-
-
-
-
-
-
-
-
-
+    print("patients' information have been deleted")
+    break
 # --------------------
 while True:
   print("~"*40)
